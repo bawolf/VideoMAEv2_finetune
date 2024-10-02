@@ -787,8 +787,9 @@ def main(args, ds_init):
         model_ema=model_ema)
     if args.validation:
         test_stats = validation_one_epoch(data_loader_val, model, device)
+        #  Top-5 {test_stats['acc5']:.2f}%,
         print(
-            f"{len(dataset_val)} val images: Top-1 {test_stats['acc1']:.2f}%, Top-5 {test_stats['acc5']:.2f}%, loss {test_stats['loss']:.4f}"
+            f"{len(dataset_val)} val images: Top-1 {test_stats['acc1']:.2f}%, loss {test_stats['loss']:.4f}"
         )
         exit(0)
 
@@ -870,8 +871,8 @@ def main(args, ds_init):
             if log_writer is not None:
                 log_writer.update(
                     val_acc1=test_stats['acc1'], head="perf", step=epoch)
-                log_writer.update(
-                    val_acc5=test_stats['acc5'], head="perf", step=epoch)
+                # log_writer.update(
+                #     val_acc5=test_stats['acc5'], head="perf", step=epoch)
                 log_writer.update(
                     val_loss=test_stats['loss'], head="perf", step=epoch)
 

@@ -1,7 +1,7 @@
 # pylint: disable=line-too-long,too-many-lines,missing-docstring
 import os
 import warnings
-
+import traceback as tb
 import numpy as np
 import pandas as pd
 import torch
@@ -263,6 +263,7 @@ class VideoClsDataset(Dataset):
         try:
             vr = self.video_loader(fname)
         except Exception as e:
+            print(''.join(tb.format_exception(None, e, e.__traceback__)))
             print(f"Failed to load video from {fname} with error {e}!")
             return []
 
@@ -421,6 +422,8 @@ class RawFrameClsDataset(Dataset):
 
             sample = self.dataset_samples[index]
             total_frame = self.total_frames[index]
+
+            print(f'Loading video {sample} with {total_frame} frames')
             buffer = self.load_frame(
                 sample, total_frame, sample_rate_scale=scale_t)  # T H W C
             if len(buffer) == 0:

@@ -14,4 +14,4 @@ timm==0.4.12
 torch>=1.2
 torchaudio
 torchvision
-triton==1.0.0
+triton

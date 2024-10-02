@@ -46,7 +46,8 @@ def build_dataset(is_train, test_mode, args):
     else:
         mode = 'validation'
         anno_path = os.path.join(args.data_path, 'val.csv')
-
+    print("Dataset: %s" % args.data_set)
+    print(f"args.sparse_sample: {args.sparse_sample}")
     if args.data_set == 'Kinetics-400':
         if not args.sparse_sample:
             dataset = VideoClsDataset(
@@ -66,6 +67,7 @@ def build_dataset(is_train, test_mode, args):
                 new_width=320,
                 sparse_sample=False,
                 args=args)
+            nb_classes = args.nb_classes
         else:
             dataset = VideoClsDataset(
                 anno_path=anno_path,
@@ -84,7 +86,7 @@ def build_dataset(is_train, test_mode, args):
                 new_width=320,
                 sparse_sample=True,
                 args=args)
-        nb_classes = 400
+            nb_classes = 400
 
     elif args.data_set == 'Kinetics-600':
         dataset = VideoClsDataset(
@@ -261,6 +263,8 @@ def build_dataset(is_train, test_mode, args):
     else:
         raise NotImplementedError('Unsupported Dataset')
 
+    print(f"Number of classes detected in dataset: {nb_classes}")
+    print(f"Number of classes specified in args: {args.nb_classes}")
     assert nb_classes == args.nb_classes
     print("Number of the class = %d" % args.nb_classes)
 
